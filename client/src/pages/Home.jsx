@@ -7,6 +7,7 @@ export default function Home({ addToCart, cart, updateQuantity }) {
     const [categories, setCategories] = useState(['All']);
     const [loading, setLoading] = useState(true);
     const [selectedCategory, setSelectedCategory] = useState('All');
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,7 +20,6 @@ export default function Home({ addToCart, cart, updateQuantity }) {
                 if (catRes.data.length > 0) {
                     setCategories(['All', ...catRes.data.map(c => c.name)]);
                 } else {
-                    // Fallback to deriving from products if no categories found (optional, but good for safety)
                     const derived = [...new Set(prodRes.data.map(p => p.category).filter(Boolean))];
                     if (derived.length > 0) setCategories(['All', ...derived]);
                 }
@@ -32,19 +32,31 @@ export default function Home({ addToCart, cart, updateQuantity }) {
         fetchData();
     }, []);
 
-    // Derived categories logic removed
-
-    const filteredProducts = selectedCategory === 'All'
-        ? products
-        : products.filter(p => p.category === selectedCategory);
+    const filteredProducts = products.filter(p => {
+        const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
+        const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (p.category && p.category.toLowerCase().includes(searchQuery.toLowerCase()));
+        return matchesCategory && matchesSearch;
+    });
 
     if (loading) return <div className="text-center py-20 text-slate-400">Loading essentials...</div>;
 
     return (
         <div>
-            <div className="mb-6">
-                <h1 className="text-xl font-bold text-slate-800">Shop for Daily Essentials</h1>
-                <p className="text-sm text-slate-500">Best quality products at affordable prices.</p>
+            <div className="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h1 className="text-xl font-bold text-slate-800">Shop for Daily Essentials</h1>
+                    <p className="text-sm text-slate-500">Best quality products at affordable prices.</p>
+                </div>
+                <div className="w-full md:w-64">
+                    <input
+                        type="text"
+                        placeholder="Search products..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent text-sm"
+                    />
+                </div>
             </div>
 
             {/* Category Filter Pills */}
