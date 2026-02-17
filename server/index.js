@@ -23,9 +23,12 @@ app.get('/', (req, res) => {
 // Import Routes
 const adminRoutes = require('./routes/admin');
 const userRoutes = require('./routes/user');
+const authRoutes = require('./routes/auth');
+const { protect, admin } = require('./middleware/authMiddleware');
 
-app.use('/api/admin', adminRoutes);
+app.use('/api/admin', protect, admin, adminRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -4,6 +4,10 @@ import Home from './pages/Home';
 import Admin from './pages/Admin';
 import Cart from './pages/Cart';
 import OrderSuccess from './pages/OrderSuccess';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './context/AuthContext';
 import { useState } from 'react';
 
 function App() {
@@ -37,26 +41,36 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="min-h-screen bg-slate-50 text-slate-900 pb-20">
-        <Navbar cart={cart} />
-        <div className="container mx-auto px-4 py-6 max-w-lg md:max-w-4xl">
-          <Routes>
-            <Route path="/" element={<Home addToCart={addToCart} cart={cart} updateQuantity={updateQuantity} />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/cart" element={
-              <Cart
-                cart={cart}
-                updateQuantity={updateQuantity}
-                removeFromCart={removeFromCart}
-                setCart={setCart}
-              />
-            } />
-            <Route path="/order-success" element={<OrderSuccess />} />
-          </Routes>
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen bg-slate-50 text-slate-900 pb-20">
+          <Navbar cart={cart} />
+          <div className="container mx-auto px-4 py-6 max-w-lg md:max-w-4xl">
+            <Routes>
+              <Route path="/" element={<Home addToCart={addToCart} cart={cart} updateQuantity={updateQuantity} />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/cart" element={
+                <Cart
+                  cart={cart}
+                  updateQuantity={updateQuantity}
+                  removeFromCart={removeFromCart}
+                  setCart={setCart}
+                />
+              } />
+              <Route path="/order-success" element={<OrderSuccess />} />
+
+              {/* Protected Admin Route */}
+              <Route path="/admin" element={
+                <ProtectedRoute role="admin">
+                  <Admin />
+                </ProtectedRoute>
+              } />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 }
 
