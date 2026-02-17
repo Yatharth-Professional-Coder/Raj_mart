@@ -79,16 +79,26 @@ export default function Admin() {
                         <div className="card sticky top-24">
                             <h2 className="text-lg font-bold mb-4">Add New Product</h2>
                             <form onSubmit={handleSubmit} className="space-y-3">
-                                <input name="name" placeholder="Product Name" value={formData.name} onChange={handleInputChange} className="w-full p-2 border rounded" required />
+                                <input name="name" placeholder="Product Name" value={formData.name} onChange={handleInputChange} className="input-field" required />
                                 <div className="grid grid-cols-2 gap-2">
-                                    <input name="price" type="number" placeholder="Price (₹)" value={formData.price} onChange={handleInputChange} className="w-full p-2 border rounded" required />
-                                    <input name="discount" type="number" placeholder="Discount (₹)" value={formData.discount} onChange={handleInputChange} className="w-full p-2 border rounded" />
+                                    <input name="price" type="number" placeholder="Price (₹)" value={formData.price} onChange={handleInputChange} className="input-field" required />
+                                    <input name="discount" type="number" placeholder="Discount (₹)" value={formData.discount} onChange={handleInputChange} className="input-field" />
                                 </div>
                                 <div className="grid grid-cols-2 gap-2">
-                                    <input name="stock" type="number" placeholder="Stock" value={formData.stock} onChange={handleInputChange} className="w-full p-2 border rounded" required />
-                                    <input name="unit" placeholder="Unit (e.g., 1 kg)" value={formData.unit} onChange={handleInputChange} className="w-full p-2 border rounded" />
+                                    <input name="stock" type="number" placeholder="Stock" value={formData.stock} onChange={handleInputChange} className="input-field" required />
+                                    <input name="unit" placeholder="Unit (e.g., 1 kg)" value={formData.unit} onChange={handleInputChange} className="input-field" />
                                 </div>
-                                <input name="imageUrl" placeholder="Image URL" value={formData.imageUrl} onChange={handleInputChange} className="w-full p-2 border rounded" required />
+                                <select name="category" value={formData.category} onChange={handleInputChange} className="input-field" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Dairy & Bread">Dairy & Bread</option>
+                                    <option value="Snacks">Snacks & Munchies</option>
+                                    <option value="Vegetables">Fruits & Vegetables</option>
+                                    <option value="Personal Care">Personal Care</option>
+                                    <option value="Household">Household Items</option>
+                                    <option value="Beverages">Beverages</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <input name="imageUrl" placeholder="Image URL" value={formData.imageUrl} onChange={handleInputChange} className="input-field" required />
                                 <button type="submit" className="w-full btn-primary bg-slate-800 hover:bg-slate-900">Add Product</button>
                             </form>
                         </div>
