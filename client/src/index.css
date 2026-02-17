@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #e11d48; /* Premium Red/Pinkish similar to Blinkit/Zepto vibe */
+  --secondary: #fff1f2;
+  --dark: #1e293b;
+  --gray: #64748b;
+  --light: #f1f5f9;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #f8fafc;
+  color: var(--dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.btn-primary {
+  @apply bg-rose-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-rose-700 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.card {
+  @apply bg-white p-4 rounded-xl shadow-sm border border-slate-100;
+}
