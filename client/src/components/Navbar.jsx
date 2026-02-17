@@ -17,20 +17,25 @@ export default function Navbar({ cart }) {
                     {user ? (
                         <div className="flex items-center gap-3">
                             {user.role === 'admin' && (
-                                <Link to="/admin" className="text-sm font-medium text-slate-500 hover:text-rose-600">
-                                    Admin
+                                <Link to="/admin" className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider rounded-full hover:bg-rose-100 hover:text-rose-600 transition-colors">
+                                    Admin Panel
                                 </Link>
                             )}
-                            <div className="flex items-center gap-1 text-sm font-bold text-slate-700">
-                                <UserIcon size={16} />
-                                <span>{user.username}</span>
+                            <div className="flex items-center gap-2 group cursor-pointer">
+                                <div className="w-8 h-8 bg-gradient-to-br from-rose-100 to-pink-100 rounded-full flex items-center justify-center text-rose-600">
+                                    <UserIcon size={16} />
+                                </div>
+                                <div className="hidden md:block text-sm">
+                                    <div className="text-xs text-slate-400 font-medium">Hello,</div>
+                                    <div className="font-bold text-slate-700 leading-none">{user.username}</div>
+                                </div>
                             </div>
-                            <button onClick={logout} className="text-slate-400 hover:text-rose-600" title="Logout">
+                            <button onClick={logout} className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-full transition-all" title="Logout">
                                 <LogOut size={18} />
                             </button>
                         </div>
                     ) : (
-                        <Link to="/login" className="text-sm font-bold text-slate-700 hover:text-rose-600">
+                        <Link to="/login" className="px-5 py-2 text-sm font-bold text-slate-700 hover:text-rose-600 border border-slate-200 rounded-full hover:border-rose-200 hover:bg-rose-50 transition-all">
                             Login
                         </Link>
                     )}

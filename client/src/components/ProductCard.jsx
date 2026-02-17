@@ -29,27 +29,27 @@ export default function ProductCard({ product, cart = [], addToCart, updateQuant
                 </h3>
             </div>
 
-            <div className="mt-auto">
-                <div className="flex items-baseline gap-1 mb-2">
-                    <span className="font-bold text-sm">₹{discountPrice}</span>
+            <div className="mt-auto pt-3">
+                <div className="flex items-baseline gap-1.5 mb-3">
+                    <span className="font-bold text-slate-900">₹{discountPrice}</span>
                     {hasDiscount && <span className="text-xs text-slate-400 line-through">₹{product.price}</span>}
                 </div>
 
                 {quantity === 0 ? (
                     <button
                         onClick={() => addToCart(product)}
-                        className="w-full py-1.5 px-3 bg-rose-50 text-rose-600 text-xs font-bold rounded-lg border border-rose-100 uppercase tracking-wide hover:bg-rose-100 transition-colors"
+                        className="w-full py-2 px-3 bg-rose-50 text-rose-600 text-sm font-bold rounded-xl border border-rose-100/50 hover:bg-rose-600 hover:text-white transition-all duration-300 active:scale-95"
                     >
-                        Add
+                        ADD
                     </button>
                 ) : (
-                    <div className="flex items-center justify-between bg-rose-600 text-white rounded-lg px-2 py-1">
-                        <button onClick={() => updateQuantity(product._id, -1)} className="p-0.5 hover:bg-rose-700 rounded">
-                            <Minus size={14} />
+                    <div className="flex items-center justify-between bg-rose-600 text-white rounded-xl px-1 py-1 shadow-md shadow-rose-200">
+                        <button onClick={() => updateQuantity(product._id, -1)} className="p-1.5 hover:bg-rose-700 rounded-lg transition-colors">
+                            <Minus size={16} />
                         </button>
-                        <span className="text-xs font-bold w-4 text-center">{quantity}</span>
-                        <button onClick={() => updateQuantity(product._id, 1)} className="p-0.5 hover:bg-rose-700 rounded">
-                            <Plus size={14} />
+                        <span className="text-sm font-bold w-6 text-center">{quantity}</span>
+                        <button onClick={() => updateQuantity(product._id, 1)} className="p-1.5 hover:bg-rose-700 rounded-lg transition-colors">
+                            <Plus size={16} />
                         </button>
                     </div>
                 )}

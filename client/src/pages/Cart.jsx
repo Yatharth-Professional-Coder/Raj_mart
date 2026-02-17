@@ -112,26 +112,31 @@ export default function Cart({ cart, updateQuantity, removeFromCart, setCart }) 
                 <div>
                     <div className="card">
                         <h2 className="font-bold mb-4">Delivery Details</h2>
-                        <form onSubmit={handlePlaceOrder} className="space-y-3">
+                        <form onSubmit={handlePlaceOrder} className="space-y-4">
                             <div>
-                                <label className="text-xs font-bold text-slate-500 uppercase">Name</label>
-                                <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-rose-500 outline-none" placeholder="Enter your name" />
+                                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Name</label>
+                                <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="input-field" placeholder="Enter your full name" />
                             </div>
                             <div>
-                                <label className="text-xs font-bold text-slate-500 uppercase">Phone Number</label>
-                                <input required value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-rose-500 outline-none" placeholder="10-digit mobile number" />
+                                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Phone Number</label>
+                                <input required type="tel" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} className="input-field" placeholder="10-digit mobile number" />
                             </div>
                             <div>
-                                <label className="text-xs font-bold text-slate-500 uppercase">Address</label>
-                                <textarea required rows="3" value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-rose-500 outline-none" placeholder="Complete address with landmark" />
+                                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Delivery Address</label>
+                                <textarea required rows="3" value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} className="input-field resize-none" placeholder="Complete address (House No, Street, Landmark)" />
                             </div>
 
-                            <div className="text-xs text-slate-500 mt-2 bg-slate-50 p-2 rounded">
+                            <div className="text-xs text-slate-500 bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-green-500"></div>
                                 Payment Method: <span className="font-bold text-slate-800">Cash on Delivery (COD)</span>
                             </div>
 
-                            <button type="submit" disabled={loading} className="w-full btn-primary bg-slate-900 py-3 text-lg shadow-lg shadow-slate-200 mt-4">
-                                {loading ? 'Placing Order...' : `Place Order • ₹${total}`}
+                            <button type="submit" disabled={loading} className="w-full btn-primary py-3.5 text-lg shadow-xl shadow-rose-200/50 mt-2">
+                                {loading ? 'Placing Order...' : (
+                                    <span className="flex items-center justify-center gap-2">
+                                        Place Order <span className="text-white/80">•</span> ₹{total}
+                                    </span>
+                                )}
                             </button>
                         </form>
                     </div>

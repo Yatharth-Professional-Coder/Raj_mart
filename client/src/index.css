@@ -1,32 +1,81 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #e11d48; /* Premium Red/Pinkish similar to Blinkit/Zepto vibe */
+  --primary: #e11d48;
+  /* Rose-600 */
+  --primary-dark: #be123c;
+  /* Rose-700 */
   --secondary: #fff1f2;
-  --dark: #1e293b;
+  --dark: #0f172a;
+  /* Slate-900 */
   --gray: #64748b;
-  --light: #f1f5f9;
+  --light: #f8fafc;
+  --surface: #ffffff;
 }
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #f8fafc;
+  background-color: #f1f5f9;
   color: var(--dark);
   -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
 }
 
-/* Glassmorphism Utilities */
+/* Glassmorphism & Premium Utilities */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .btn-primary {
-  @apply bg-rose-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-rose-700 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply bg-gradient-to-r from-rose-600 to-pink-600 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-rose-200 hover:shadow-rose-300 hover:scale-[1.02] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none;
 }
 
 .card {
-  @apply bg-white p-4 rounded-xl shadow-sm border border-slate-100;
+  background-color: white;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.input-field:focus {
+  border-color: #f43f5e;
+  box-shadow: 0 0 0 4px rgba(244, 63, 94, 0.1);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }

@@ -42,8 +42,10 @@ export default function Home({ addToCart, cart, updateQuantity }) {
             </div>
 
             {products.length === 0 && (
-                <div className="text-center py-20 bg-white rounded-xl border border-dashed border-slate-200">
-                    <p className="text-slate-400">No products available yet.</p>
+                <div className="text-center py-24 bg-white rounded-2xl border border-dashed border-slate-200 shadow-sm">
+                    <div className="text-4xl mb-3">🛍️</div>
+                    <h3 className="text-lg font-bold text-slate-700">No products found</h3>
+                    <p className="text-slate-400 text-sm">Check back later for fresh stock.</p>
                 </div>
             )}
         </div>
