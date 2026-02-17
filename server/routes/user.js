@@ -2,6 +2,17 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
 const Order = require('../models/Order');
+const Category = require('../models/Category');
+
+// Get All Categories
+router.get('/categories', async (req, res) => {
+    try {
+        const categories = await Category.find().sort({ name: 1 });
+        res.json(categories);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 // Get All Products
 router.get('/products', async (req, res) => {

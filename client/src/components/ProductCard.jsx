@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Plus, Minus } from 'lucide-react';
 
 export default function ProductCard({ product, cart = [], addToCart, updateQuantity }) {
@@ -7,13 +8,26 @@ export default function ProductCard({ product, cart = [], addToCart, updateQuant
     const discountPrice = product.price - (product.discount || 0);
     const hasDiscount = product.discount > 0;
 
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    // Use images array if available, otherwise fallback to imageUrl, then placeholder
+    const images = product.images && product.images.length > 0 ? product.images : [product.imageUrl || "https://placehold.co/200"];
+
+    useEffect(() => {
+        if (images.length > 1) {
+            const interval = setInterval(() => {
+                setCurrentImageIndex((prev) => (prev + 1) % images.length);
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+    }, [images.length]);
+
     return (
         <div className="bg-white rounded-xl p-3 shadow-sm border border-slate-100 flex flex-col gap-2 hover:shadow-md transition-shadow">
             <div className="relative aspect-square rounded-lg overflow-hidden bg-slate-50 mb-2">
                 <img
-                    src={product.imageUrl || "https://placehold.co/200"}
+                    src={images[currentImageIndex]}
                     alt={product.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-opacity duration-500"
                 />
                 {hasDiscount && (
                     <div className="absolute top-0 left-0 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded-br-lg">

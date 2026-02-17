@@ -2,6 +2,40 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
 const Order = require('../models/Order');
+const Category = require('../models/Category');
+
+// --- Categories ---
+
+// Create Category
+router.post('/categories', async (req, res) => {
+    try {
+        const category = new Category(req.body);
+        await category.save();
+        res.status(201).json(category);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+// Delete Category
+router.delete('/categories/:id', async (req, res) => {
+    try {
+        await Category.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Category deleted' });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+// Get Categories (Admin)
+router.get('/categories', async (req, res) => {
+    try {
+        const categories = await Category.find().sort({ name: 1 });
+        res.json(categories);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 // --- Products ---
 

@@ -5,7 +5,8 @@ const productSchema = new mongoose.Schema({
     price: { type: Number, required: true },
     discount: { type: Number, default: 0 },
     stock: { type: Number, required: true },
-    imageUrl: { type: String, required: true }, // Using URL for simplicity
+    imageUrl: { type: String }, // Kept for backward compatibility, but UI will prefer images[0]
+    images: [{ type: String }], // Array of image URLs
     category: { type: String },
     unit: { type: String, default: 'pc' },
 }, { timestamps: true });

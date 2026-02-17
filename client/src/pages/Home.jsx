@@ -4,25 +4,35 @@ import ProductCard from '../components/ProductCard';
 
 export default function Home({ addToCart, cart, updateQuantity }) {
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState(['All']);
     const [loading, setLoading] = useState(true);
     const [selectedCategory, setSelectedCategory] = useState('All');
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchData = async () => {
             try {
-                const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/products`);
-                setProducts(res.data);
+                const [prodRes, catRes] = await Promise.all([
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/user/products`),
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/user/categories`)
+                ]);
+                setProducts(prodRes.data);
+                if (catRes.data.length > 0) {
+                    setCategories(['All', ...catRes.data.map(c => c.name)]);
+                } else {
+                    // Fallback to deriving from products if no categories found (optional, but good for safety)
+                    const derived = [...new Set(prodRes.data.map(p => p.category).filter(Boolean))];
+                    if (derived.length > 0) setCategories(['All', ...derived]);
+                }
             } catch (err) {
-                console.error("Failed to fetch products", err);
+                console.error("Failed to fetch data", err);
             } finally {
                 setLoading(false);
             }
         };
-        fetchProducts();
+        fetchData();
     }, []);
 
-    // Extract categories
-    const categories = ['All', ...new Set(products.map(p => p.category).filter(Boolean))];
+    // Derived categories logic removed
 
     const filteredProducts = selectedCategory === 'All'
         ? products
