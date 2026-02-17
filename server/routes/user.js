@@ -87,4 +87,15 @@ router.get('/orders/:id', async (req, res) => {
     }
 });
 
+// Track Order by Phone
+router.get('/orders/track/:phone', async (req, res) => {
+    try {
+        const { phone } = req.params;
+        const orders = await Order.find({ phone }).sort({ createdAt: -1 });
+        res.json(orders);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;

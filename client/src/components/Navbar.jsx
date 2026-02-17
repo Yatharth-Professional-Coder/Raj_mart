@@ -9,9 +9,14 @@ export default function Navbar({ cart }) {
     return (
         <nav className="sticky top-0 z-50 glass bg-white/80 border-b border-slate-200">
             <div className="container mx-auto px-4 h-16 flex items-center justify-between max-w-5xl">
-                <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-rose-600 to-pink-500 bg-clip-text text-transparent">
-                    Raj Mart
-                </Link>
+                <div className="flex items-center gap-4">
+                    <Link to="/" className="text-2xl font-black bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
+                        Raj Mart
+                    </Link>
+                    <Link to="/track-order" className="text-xs font-bold text-slate-500 hover:text-rose-600 uppercase tracking-wide bg-slate-100 px-2 py-1 rounded-md transition-colors">
+                        Track Order
+                    </Link>
+                </div>
 
                 <div className="flex items-center gap-4">
                     {user ? (

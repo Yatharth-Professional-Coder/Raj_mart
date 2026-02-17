@@ -9,6 +9,7 @@ import Signup from './pages/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import { useState } from 'react';
+import TrackOrder from './pages/TrackOrder';
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -59,6 +60,7 @@ function App() {
                 />
               } />
               <Route path="/order-success" element={<OrderSuccess />} />
+              <Route path="/track-order" element={<TrackOrder />} />
 
               {/* Protected Admin Route */}
               <Route path="/admin" element={
