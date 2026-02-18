@@ -3,24 +3,29 @@ import axios from 'axios';
 import { Search, Package, Check, Clock, Truck, X } from 'lucide-react';
 
 export default function TrackOrder() {
-    const [phone, setPhone] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
     const [orders, setOrders] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     const handleTrack = async (e) => {
         e.preventDefault();
-        if (phone.length < 10) {
-            setError('Please enter a valid 10-digit mobile number');
+
+        // Validation: 10 digit phone OR 24 char hex Order ID
+        const isPhone = /^\d{10}$/.test(searchQuery);
+        const isOrderId = /^[0-9a-fA-F]{24}$/.test(searchQuery);
+
+        if (!isPhone && !isOrderId) {
+            setError('Please enter a valid 10-digit mobile number or Order ID');
             return;
         }
 
         setLoading(true);
         setError('');
         try {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/orders/track/${phone}`);
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/orders/track/${searchQuery}`);
             setOrders(res.data);
-            if (res.data.length === 0) setError('No orders found for this number.');
+            if (res.data.length === 0) setError('No orders found for this details.');
         } catch (err) {
             setError('Failed to fetch orders. Please try again.');
         } finally {
@@ -52,17 +57,17 @@ export default function TrackOrder() {
         <div className="max-w-2xl mx-auto py-8 px-4">
             <div className="text-center mb-10">
                 <h1 className="text-3xl font-bold text-slate-800 mb-3">Track Your Order</h1>
-                <p className="text-slate-500">Enter your mobile number to view your order history and status.</p>
+                <p className="text-slate-500">Enter your mobile number or Order ID to track status.</p>
             </div>
 
             <div className="card max-w-md mx-auto mb-10">
                 <form onSubmit={handleTrack} className="flex gap-2">
                     <input
-                        type="tel"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                        placeholder="Enter 10-digit Mobile Number"
-                        className="input-field flex-1 text-lg tracking-widest text-center"
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Mobile Number or Order ID"
+                        className="input-field flex-1 text-lg tracking-widest text-center placeholder:text-base placeholder:tracking-normal"
                         required
                     />
                     <button type="submit" disabled={loading} className="btn-primary !py-2 !px-4">

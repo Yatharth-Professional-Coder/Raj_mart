@@ -4,6 +4,8 @@ const Product = require('../models/Product');
 const Order = require('../models/Order');
 const Category = require('../models/Category');
 
+const mongoose = require('mongoose');
+
 // Get All Categories
 router.get('/categories', async (req, res) => {
     try {
@@ -80,6 +82,9 @@ router.post('/orders', async (req, res) => {
         });
 
         await order.save();
+
+
+
         res.status(201).json(order);
 
     } catch (err) {
@@ -98,11 +103,18 @@ router.get('/orders/:id', async (req, res) => {
     }
 });
 
-// Track Order by Phone
-router.get('/orders/track/:phone', async (req, res) => {
+// Track Order by Phone or Order ID
+router.get('/orders/track/:query', async (req, res) => {
     try {
-        const { phone } = req.params;
-        const orders = await Order.find({ phone }).sort({ createdAt: -1 });
+        const { query } = req.params;
+        let orders;
+
+        if (mongoose.Types.ObjectId.isValid(query)) {
+            orders = await Order.find({ _id: query });
+        } else {
+            orders = await Order.find({ phone: query }).sort({ createdAt: -1 });
+        }
+
         res.json(orders);
     } catch (err) {
         res.status(500).json({ error: err.message });
